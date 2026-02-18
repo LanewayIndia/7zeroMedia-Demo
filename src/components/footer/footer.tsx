@@ -1,6 +1,6 @@
 "use client"
 
-export default function Blogs(){
+export default function Footer(){
     return(
         <>
         </>

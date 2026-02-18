@@ -1,14 +1,27 @@
 import Navbar from "@/components/navbar/page";
-import Image from "next/image";
+import Home from "@/components/home/page";
+import Contact from "@/components/contact/page";
+import OurWork from "@/components/our-work/page";
+import Service from "@/components/service/page";
+import Careers from "@/components/careers/page";
+import Blogs from "@/components/blogs/page";
+import About from "@/components/about/page";
+import Footer from "@/components/footer/footer";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <main>
-        <div>
-        </div>
+        <Home />
+        <About />
+        <Service />
+        <OurWork />
+        <Blogs />
+        <Careers />
+        <Contact />
       </main>
+      <Footer />
     </div>
   );
 }
