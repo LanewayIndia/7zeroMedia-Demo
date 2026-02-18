@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { Button } from "../ui/button"
 
 export default function Navbar() {
     return (
@@ -17,6 +18,10 @@ export default function Navbar() {
                 <Link href="#blog">Blog</Link>
                 <Link href="#careers">Careers</Link>
                 <Link href="#contact">Contact</Link>
+            </div>
+            <div className="flex gap-2 items-center justify-end">
+                <Button><Link href="/auth/sign-up">Sign-up</Link></Button>
+                <Button><Link href="/auth/sign-in">Sign-in</Link></Button>
             </div>
         </nav>
     )

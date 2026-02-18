@@ -37,6 +37,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* custum width */
+  --max-content-width: 1600px;
+  --min-content-width: 320px;
+  --container-width: 1360px;
 }
 
 @theme inline {
@@ -137,3 +142,129 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Premium thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 85, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 85, 0.5);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(201, 168, 85, 0.4);
+  color: #fafafa;
+}
+
+/* Premium glass card styles */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-card-highlight {
+  background: linear-gradient(135deg, var(--glass-highlight) 0%, transparent 50%);
+}
+
+/* Premium text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle noise texture for depth */
+.noise-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  pointer-events: none;
+}
+
+/* Premium glow effects */
+.glow-gold {
+  box-shadow: 0 0 40px rgba(201, 168, 85, 0.15);
+}
+
+.glow-gold-sm {
+  box-shadow: 0 0 20px rgba(201, 168, 85, 0.1);
+}
+
+/* Premium letter spacing for uppercase labels */
+.tracking-premium {
+  letter-spacing: 0.2em;
+}
+
+/* Responsive helpers ---------------------------------------------------- */
+
+/* Fluid root font for better scaling on small devices */
+html {
+  font-size: clamp(14px, 1.4vw + 12px, 18px);
+}
+
+html, body {
+  overflow-x: clip;
+}
+
+/* Global container utility used across layouts */
+.container {
+  max-width: var(--container-width);
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem; /* 16px */
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .container { padding-left: 3rem; padding-right: 3rem; }
+}
+
+/* Make images and iframes responsive by default */
+img, picture, svg, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Utility to stack complex grids on small screens */
+.stack-mobile {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .stack-mobile.md\:cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .stack-mobile.md\:cols-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Ensure cards shrink nicely on small screens */
+.glass-card { width: 100%; box-sizing: border-box; }
+
+/* Responsive utility for small buttons */
+.btn-responsive { padding: 0.6rem 1rem; font-size: 0.875rem; }
