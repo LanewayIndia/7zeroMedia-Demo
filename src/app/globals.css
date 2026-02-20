@@ -313,8 +313,33 @@ iframe {
 }
 
 /* Responsive utility for small buttons */
+<<<<<<< HEAD
 .btn-responsive {
   padding: 0.6rem 1rem;
   font-size: 0.875rem;
 }
 
+=======
+
+
+.line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+.line {
+  display: block;
+}
+
+/* 🔥 HERO PARALLAX GRID */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.btn-responsive {
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+}
+>>>>>>> ad8cd9049ad1fb882703a3428b8f582759ca20d3
