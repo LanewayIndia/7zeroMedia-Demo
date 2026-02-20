@@ -313,4 +313,8 @@ iframe {
 }
 
 /* Responsive utility for small buttons */
-.btn-responsive { padding: 0.6rem 1rem; font-size: 0.875rem; }
+.btn-responsive {
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+}
+
