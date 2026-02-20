@@ -313,7 +313,13 @@ iframe {
 }
 
 /* Responsive utility for small buttons */
-.btn-responsive { padding: 0.6rem 1rem; font-size: 0.875rem; }
+<<<<<<< HEAD
+.btn-responsive {
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
+}
+
+=======
 
 
 .line-mask {
@@ -336,3 +342,4 @@ iframe {
   padding: 0.6rem 1rem;
   font-size: 0.875rem;
 }
+>>>>>>> ad8cd9049ad1fb882703a3428b8f582759ca20d3
