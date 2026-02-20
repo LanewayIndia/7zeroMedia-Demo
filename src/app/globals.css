@@ -4,39 +4,61 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================================
+   PALETTE
+   --orange:     #F97316  (Bold Orange  — primary accent)
+   --white:      #FFFFFF  (White        — base background)
+   --warm-gray:  #F8F8F8  (Soft Warm Gray — surface)
+   --black:      #111111  (Matte Black  — text / heavy bg)
+   ============================================================ */
+
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #ffffff;
+  --foreground: #111111;
   --radius: 0.625rem;
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+
+  --card: #f8f8f8;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f8f8f8;
+  --secondary-foreground: #111111;
+
+  --muted: #f8f8f8;
+  --muted-foreground: #6b6b6b;
+
+  --accent: #f97316;
+  --accent-foreground: #ffffff;
+
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: rgba(17, 17, 17, 0.1);
+  --input: rgba(17, 17, 17, 0.08);
+  --ring: #f97316;
+
+  /* Chart colors — keep a warm palette */
+  --chart-1: #f97316;
+  --chart-2: #fb923c;
+  --chart-3: #fdba74;
+  --chart-4: #111111;
+  --chart-5: #6b6b6b;
+
+  --sidebar: #f8f8f8;
+  --sidebar-foreground: #111111;
+  --sidebar-primary: #f97316;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f8f8f8;
+  --sidebar-accent-foreground: #111111;
+  --sidebar-border: rgba(17, 17, 17, 0.1);
+  --sidebar-ring: #f97316;
+
+  /* Custom brand tokens */
+  --orange: #f97316;
+  --orange-light: #fb923c;
+  --orange-glow: rgba(249, 115, 22, 0.18);
 
   /* custum width */
   --max-content-width: 1600px;
@@ -87,12 +109,7 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* No dark mode override — site is light-mode first */
 
 body {
   background: var(--background);
@@ -158,35 +175,39 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(201, 168, 85, 0.3);
+  background: rgba(249, 115, 22, 0.35);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 168, 85, 0.5);
+  background: rgba(249, 115, 22, 0.6);
 }
 
 /* Selection color */
 ::selection {
-  background: rgba(201, 168, 85, 0.4);
-  color: #fafafa;
+  background: rgba(249, 115, 22, 0.25);
+  color: #111111;
 }
 
 /* Premium glass card styles */
 .glass-card {
-  background: var(--glass-bg);
+  background: rgba(248, 248, 248, 0.75);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(17, 17, 17, 0.08);
 }
 
 .glass-card-highlight {
-  background: linear-gradient(135deg, var(--glass-highlight) 0%, transparent 50%);
+  background: linear-gradient(
+    135deg,
+    rgba(249, 115, 22, 0.08) 0%,
+    transparent 50%
+  );
 }
 
-/* Premium text gradient */
+/* Premium text gradient — orange */
 .text-gradient {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -202,13 +223,21 @@ html {
   pointer-events: none;
 }
 
-/* Premium glow effects */
-.glow-gold {
-  box-shadow: 0 0 40px rgba(201, 168, 85, 0.15);
+/* Premium glow effects — orange */
+.glow-orange {
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.18);
 }
 
+.glow-orange-sm {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.12);
+}
+
+/* Keep old names as aliases so nothing breaks */
+.glow-gold {
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.18);
+}
 .glow-gold-sm {
-  box-shadow: 0 0 20px rgba(201, 168, 85, 0.1);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.12);
 }
 
 /* Premium letter spacing for uppercase labels */
@@ -223,7 +252,8 @@ html {
   font-size: clamp(14px, 1.4vw + 12px, 18px);
 }
 
-html, body {
+html,
+body {
   overflow-x: clip;
 }
 
@@ -238,14 +268,23 @@ html, body {
 }
 
 @media (min-width: 640px) {
-  .container { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 @media (min-width: 1024px) {
-  .container { padding-left: 3rem; padding-right: 3rem; }
+  .container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
 }
 
 /* Make images and iframes responsive by default */
-img, picture, svg, iframe {
+img,
+picture,
+svg,
+iframe {
   max-width: 100%;
   height: auto;
   display: block;
@@ -259,12 +298,19 @@ img, picture, svg, iframe {
 }
 
 @media (min-width: 768px) {
-  .stack-mobile.md\:cols-2 { grid-template-columns: repeat(2, 1fr); }
-  .stack-mobile.md\:cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .stack-mobile.md\:cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stack-mobile.md\:cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* Ensure cards shrink nicely on small screens */
-.glass-card { width: 100%; box-sizing: border-box; }
+.glass-card {
+  width: 100%;
+  box-sizing: border-box;
+}
 
 /* Responsive utility for small buttons */
 .btn-responsive { padding: 0.6rem 1rem; font-size: 0.875rem; }
@@ -285,4 +331,8 @@ img, picture, svg, iframe {
     linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
   background-size: 60px 60px;
+}
+.btn-responsive {
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
 }

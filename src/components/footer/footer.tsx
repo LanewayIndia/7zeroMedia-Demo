@@ -88,14 +88,14 @@ export default function Footer() {
     }, [])
 
     return (
-        <footer ref={footerRef} className="relative border-t border-white/10 bg-black/40 backdrop-blur-sm px-6 md:px-12 lg:px-20 py-16">
+        <footer ref={footerRef} className="relative border-t border-[#111111]/10 bg-[#F8F8F8] px-6 md:px-12 lg:px-20 py-16">
             {/* Top glow accent */}
-            <div className="absolute top-0 left-1/4 right-1/4 h-px bg-linear-to-r from-transparent via-yellow-400/40 to-transparent" />
+            <div className="absolute top-0 left-1/4 right-1/4 h-px bg-linear-to-r from-transparent via-[#F97316]/40 to-transparent" />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
                 {/* Brand column */}
                 <div ref={brandRef} className="sm:col-span-2 lg:col-span-1">
                     <Link href="/" className="inline-block mb-5">
-                        <span className="flex items-center gap-3 font-bold text-2xl text-white">
+                        <span className="flex items-center gap-3 font-bold text-2xl text-[#111111]">
                             <Image
                                 src="/logo.png"
                                 alt="Logo"
@@ -106,10 +106,9 @@ export default function Footer() {
                             />
                         </span>
                     </Link>
-                    <p className="text-white/50 text-sm leading-relaxed mb-6">
-                        AI-Powered Media & Marketing. We help brands grow with cinematic content, data-driven strategy, and creative excellence.
-                    </p>
-                    <Link href="/contact" className="group inline-flex items-center gap-1.5 text-sm font-medium text-yellow-400 hover:text-yellow-300 transition-colors">
+                    <p className="text-[#111111]/50 text-sm leading-relaxed mb-6">
+                        AI-powered media marketing for modern brands. Transform your growth with intelligent automation.                    </p>
+                    <Link href="/contact" className="group inline-flex items-center gap-1.5 text-sm font-medium text-[#F97316] hover:text-[#ea6c0a] transition-colors">
                         <span>
                             Let's Connect
                             <ArrowUpRight
@@ -123,7 +122,7 @@ export default function Footer() {
                     <div className="flex gap-3 mt-6">
                         {socialLinks.map((socialMedia) => (
                             <a key={socialMedia.name} href={socialMedia.href} target="_blank" rel="noopener noreferrer"
-                                className="text-xs border border-white/20 text-white/60 hover:text-white hover:border-white/60 px-3 py-1.5 rounded-full transition-all duration-300">
+                                className="text-xs border border-[#111111]/20 text-[#111111]/60 hover:text-[#F97316] hover:border-[#F97316]/60 px-3 py-1.5 rounded-full transition-all duration-300">
                                 {socialMedia.name}
                             </a>
                         ))}
@@ -132,11 +131,11 @@ export default function Footer() {
 
                 {/* Quick Links column */}
                 <div ref={quickLinksRef}>
-                    <h3 className="text-xs tracking-widest uppercase text-white/40 mb-5">Quick Links</h3>
+                    <h3 className="text-xs tracking-widest uppercase text-[#111111]/40 mb-5">Quick Links</h3>
                     <ul className="space-y-3">
                         {quickLinks.map((link) => (
                             <li key={link.name}>
-                                <Link href={link.href} className="text-white/60 hover:text-white text-sm transition-colors duration-300 hover:pl-1">
+                                <Link href={link.href} className="text-[#111111]/60 hover:text-[#F97316] text-sm transition-colors duration-300 hover:pl-1">
                                     {link.name}</Link>
                             </li>
                         ))}
@@ -145,12 +144,12 @@ export default function Footer() {
 
                 {/* Services column */}
                 <div ref={servicesRef}>
-                    <h3 className="text-xs tracking-widest uppercase text-white/40 mb-5">Services</h3>
+                    <h3 className="text-xs tracking-widest uppercase text-[#111111]/40 mb-5">Services</h3>
                     <ul className="space-y-3">
                         {services.map((service) => (
                             <li key={service.name}>
                                 <Link href={service.href}
-                                    className="text-white/60 hover:text-white text-sm transition-colors duration-300 hover:pl-1">
+                                    className="text-[#111111]/60 hover:text-[#F97316] text-sm transition-colors duration-300 hover:pl-1">
                                     {service.name}
                                 </Link>
                             </li>
@@ -160,34 +159,34 @@ export default function Footer() {
 
                 {/* Contact Info */}
                 <div ref={contactRef}>
-                    <h3 className="text-xs tracking-widest uppercase text-white/40 mb-5">Contact Info</h3>
-                    <ul className="space-y-4 text-sm text-white/60">
-                        <li className="items-start gap-2">
+                    <h3 className="text-xs tracking-widest uppercase text-[#111111]/40 mb-5">Contact Info</h3>
+                    <ul className="space-y-4 text-sm text-[#111111]/60">
+                        {/* <li className="items-start gap-2">
                             <span>📍</span>
-                            <strong>Head Office</strong> 
+                            <strong>Head Office</strong>
                             <br />
-                            <span>1087 B, Sankranthi, Perumbaikkad 
+                            <span>1087 B, Sankranthi, Perumbaikkad
                                 <br />
                                 Kottayam - 686016, Kerala</span>
-                            <br/>
+                            <br />
                             <br />
                             <span>📍</span>
-                            <strong>Operational Office</strong> 
+                            <strong>Operational Office</strong>
                             <br />
-                            <span>Koramangala 8th Blockd 
+                            <span>Koramangala 8th Blockd
                                 <br />
 
                                 Bangalore - 560095, Karnataka</span>
-                        </li>
+                        </li> */}
                         <li className="flex items-start gap-2">
                             <span>📧</span>
-                            <a href="mailto:hello@7zero.media" className="hover:text-white transition-colors">
-                                info@laneway.in
+                            <a href="mailto:hello@7zero.media" className="hover:text-[#F97316] transition-colors">
+                                info@7zero.media
                             </a>
                         </li>
                         <li className="flex items-start gap-2">
                             <span>📞</span>
-                            <a href="tel:+1234567890" className="hover:text-white transition-colors">
+                            <a href="tel:+1234567890" className="hover:text-[#F97316] transition-colors">
                                 +91 9961348942
                             </a>
                         </li>
@@ -195,11 +194,11 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div ref={bottomBarRef} className="flex border-t border-white/10 pt-6 flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
+                <div ref={bottomBarRef} className="flex border-t border-[#111111]/10 pt-6 flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#111111]/40">
                     <p>© {new Date().getFullYear()} 7ZeroMedia. All rights reserved.</p>
                     <div className="flex gap-4">
-                        <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-white/60 transition-colors">Terms of Service</Link>
+                        <Link href="/privacy" className="hover:text-[#F97316] transition-colors">Privacy Policy</Link>
+                        <Link href="/terms" className="hover:text-[#F97316] transition-colors">Terms of Service</Link>
                     </div>
                 </div>
             </div>
