@@ -107,8 +107,7 @@ export default function Footer() {
                         </span>
                     </Link>
                     <p className="text-white/50 text-sm leading-relaxed mb-6">
-                        AI-Powered Media & Marketing. We help brands grow with cinematic content, data-driven strategy, and creative excellence.
-                    </p>
+                        AI-powered media marketing for modern brands. Transform your growth with intelligent automation.                    </p>
                     <Link href="/contact" className="group inline-flex items-center gap-1.5 text-sm font-medium text-yellow-400 hover:text-yellow-300 transition-colors">
                         <span>
                             Let's Connect
@@ -162,27 +161,27 @@ export default function Footer() {
                 <div ref={contactRef}>
                     <h3 className="text-xs tracking-widest uppercase text-white/40 mb-5">Contact Info</h3>
                     <ul className="space-y-4 text-sm text-white/60">
-                        <li className="items-start gap-2">
+                        {/* <li className="items-start gap-2">
                             <span>📍</span>
-                            <strong>Head Office</strong> 
+                            <strong>Head Office</strong>
                             <br />
-                            <span>1087 B, Sankranthi, Perumbaikkad 
+                            <span>1087 B, Sankranthi, Perumbaikkad
                                 <br />
                                 Kottayam - 686016, Kerala</span>
-                            <br/>
+                            <br />
                             <br />
                             <span>📍</span>
-                            <strong>Operational Office</strong> 
+                            <strong>Operational Office</strong>
                             <br />
-                            <span>Koramangala 8th Blockd 
+                            <span>Koramangala 8th Blockd
                                 <br />
 
                                 Bangalore - 560095, Karnataka</span>
-                        </li>
+                        </li> */}
                         <li className="flex items-start gap-2">
                             <span>📧</span>
                             <a href="mailto:hello@7zero.media" className="hover:text-white transition-colors">
-                                info@laneway.in
+                                info@7zero.media
                             </a>
                         </li>
                         <li className="flex items-start gap-2">
