@@ -160,12 +160,12 @@ export default function Contact() {
     }
 
     const inputBase =
-        "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-white/30 outline-none transition-all duration-300 focus:border-yellow-400/60 focus:bg-white/8 focus:shadow-[0_0_20px_rgba(250,204,21,0.08)]"
+        "w-full bg-[#111111]/5 border border-[#111111]/10 rounded-xl px-4 py-3.5 text-sm text-[#111111] placeholder-[#111111]/30 outline-none transition-all duration-300 focus:border-[#F97316]/60 focus:bg-[#111111]/8 focus:shadow-[0_0_20px_rgba(249,115,22,0.08)]"
 
     return (
         <div
             ref={sectionRef}
-            className="relative min-h-screen bg-[#080808] overflow-hidden px-5 md:px-12 lg:px-20 py-24 md:py-32"
+            className="relative min-h-screen bg-[#F8F8F8] overflow-hidden px-5 md:px-12 lg:px-20 py-24 md:py-32"
         >
             {/* Background glow orb */}
             <div
@@ -173,7 +173,7 @@ export default function Contact() {
                 className="absolute top-20 right-[-10%] w-[500px] h-[500px] rounded-full pointer-events-none"
                 style={{
                     background:
-                        "radial-gradient(circle, rgba(250,204,21,0.07) 0%, rgba(250,204,21,0.02) 50%, transparent 70%)",
+                        "radial-gradient(circle, rgba(249,115,22,0.10) 0%, rgba(249,115,22,0.03) 50%, transparent 70%)",
                     filter: "blur(40px)",
                 }}
             />
@@ -181,7 +181,7 @@ export default function Contact() {
                 className="absolute bottom-10 left-[-5%] w-[400px] h-[400px] rounded-full pointer-events-none"
                 style={{
                     background:
-                        "radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)",
+                        "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 70%)",
                     filter: "blur(60px)",
                 }}
             />
@@ -197,18 +197,18 @@ export default function Contact() {
             {/* Section Header */}
             <div className="max-w-7xl mx-auto">
                 <div className="mb-4">
-                    <span className="text-xs tracking-[0.25em] uppercase text-yellow-400/70 font-medium">
+                    <span className="text-xs tracking-[0.25em] uppercase text-[#F97316]/80 font-medium">
                         Let&apos;s Work Together
                     </span>
                 </div>
 
                 <div ref={headingRef} className="mb-6 overflow-hidden">
-                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight">
+                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#111111] leading-[1.05] tracking-tight">
                         Let&apos;s create{" "}
                         <span
                             className="relative inline-block"
                             style={{
-                                background: "linear-gradient(135deg, #facc15 0%, #f59e0b 50%, #fde68a 100%)",
+                                background: "linear-gradient(135deg, #F97316 0%, #fb923c 50%, #fed7aa 100%)",
                                 WebkitBackgroundClip: "text",
                                 WebkitTextFillColor: "transparent",
                                 backgroundClip: "text",
@@ -217,11 +217,11 @@ export default function Contact() {
                             something
                         </span>
                         <br />
-                        <span className="text-white/30">iconic.</span>
+                        <span className="text-[#111111]/25">iconic.</span>
                     </h1>
                 </div>
 
-                <p ref={taglineRef} className="text-white/45 text-base md:text-lg max-w-xl mb-16 leading-relaxed">
+                <p ref={taglineRef} className="text-[#111111]/50 text-base md:text-lg max-w-xl mb-16 leading-relaxed">
                     Whether you&apos;re a startup looking to make noise or an established brand ready to evolve — we&apos;re
                     built for brands that refuse to be ordinary.
                 </p>
@@ -232,9 +232,9 @@ export default function Contact() {
                     {/* Left — Info Panel */}
                     <div ref={infoRef}>
                         {/* Neon pill badge */}
-                        <div className="inline-flex items-center gap-2 border border-yellow-400/20 bg-yellow-400/5 rounded-full px-4 py-1.5 mb-8">
-                            <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
-                            <span className="text-xs text-yellow-400/80 tracking-wider">Available for projects</span>
+                        <div className="inline-flex items-center gap-2 border border-[#F97316]/25 bg-[#F97316]/8 rounded-full px-4 py-1.5 mb-8">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse" />
+                            <span className="text-xs text-[#F97316]/90 tracking-wider">Available for projects</span>
                         </div>
 
                         {/* Contact info cards */}
@@ -244,19 +244,19 @@ export default function Contact() {
                                 const inner = (
                                     <div
                                         key={detail.label}
-                                        className="group flex items-start gap-4 border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-yellow-400/20 rounded-2xl p-4 transition-all duration-300"
+                                        className="group flex items-start gap-4 border border-[#111111]/8 bg-white hover:bg-[#F8F8F8] hover:border-[#F97316]/25 rounded-2xl p-4 transition-all duration-300"
                                     >
-                                        <div className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 flex items-center justify-center group-hover:bg-yellow-400/20 transition-colors">
-                                            <Icon size={16} className="text-yellow-400" />
+                                        <div className="mt-0.5 shrink-0 w-9 h-9 rounded-xl bg-[#F97316]/10 flex items-center justify-center group-hover:bg-[#F97316]/20 transition-colors">
+                                            <Icon size={16} className="text-[#F97316]" />
                                         </div>
                                         <div>
-                                            <p className="text-xs text-white/35 tracking-wider uppercase mb-1">{detail.label}</p>
-                                            <p className="text-sm text-white/80 leading-relaxed whitespace-pre-line">{detail.value}</p>
+                                            <p className="text-xs text-[#111111]/40 tracking-wider uppercase mb-1">{detail.label}</p>
+                                            <p className="text-sm text-[#111111]/80 leading-relaxed whitespace-pre-line">{detail.value}</p>
                                         </div>
                                         {detail.href && (
                                             <ArrowUpRight
                                                 size={14}
-                                                className="ml-auto mt-1 text-white/20 group-hover:text-yellow-400 transition-colors flex-shrink-0"
+                                                className="ml-auto mt-1 text-[#111111]/20 group-hover:text-[#F97316] transition-colors shrink-0"
                                             />
                                         )}
                                     </div>
@@ -273,7 +273,7 @@ export default function Contact() {
 
                         {/* Social links */}
                         <div>
-                            <p className="text-xs text-white/30 tracking-widest uppercase mb-4">Find us on</p>
+                            <p className="text-xs text-[#111111]/35 tracking-widest uppercase mb-4">Find us on</p>
                             <div className="flex gap-3 flex-wrap">
                                 {[
                                     { name: "Instagram", href: "https://www.instagram.com/7zero.media" },
@@ -285,7 +285,7 @@ export default function Contact() {
                                         href={s.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="group flex items-center gap-1.5 text-xs text-white/50 border border-white/10 hover:border-yellow-400/40 hover:text-yellow-400 px-4 py-2 rounded-full transition-all duration-300"
+                                        className="group flex items-center gap-1.5 text-xs text-[#111111]/50 border border-[#111111]/12 hover:border-[#F97316]/50 hover:text-[#F97316] px-4 py-2 rounded-full transition-all duration-300"
                                     >
                                         {s.name}
                                         <ArrowUpRight size={11} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
@@ -299,17 +299,17 @@ export default function Contact() {
                     <div>
                         {submitted ? (
                             // Success State
-                            <div className="border border-yellow-400/20 bg-yellow-400/5 rounded-3xl p-10 text-center min-h-[500px] flex flex-col items-center justify-center">
-                                <div className="w-16 h-16 rounded-full bg-yellow-400/10 flex items-center justify-center mb-6 mx-auto">
+                            <div className="border border-[#F97316]/25 bg-[#F97316]/5 rounded-3xl p-10 text-center min-h-[500px] flex flex-col items-center justify-center">
+                                <div className="w-16 h-16 rounded-full bg-[#F97316]/10 flex items-center justify-center mb-6 mx-auto">
                                     <span className="text-2xl">✦</span>
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Message received.</h3>
-                                <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+                                <h3 className="text-2xl font-bold text-[#111111] mb-3">Message received.</h3>
+                                <p className="text-[#111111]/50 text-sm leading-relaxed max-w-xs">
                                     We&apos;ll review your brief and get back to you within 24 hours. Big things incoming.
                                 </p>
                                 <button
                                     onClick={() => setSubmitted(false)}
-                                    className="mt-8 text-xs text-yellow-400/70 hover:text-yellow-400 underline underline-offset-4 transition-colors"
+                                    className="mt-8 text-xs text-[#F97316]/70 hover:text-[#F97316] underline underline-offset-4 transition-colors"
                                 >
                                     Send another message
                                 </button>
@@ -319,12 +319,12 @@ export default function Contact() {
                             <form
                                 ref={formRef}
                                 onSubmit={handleSubmit}
-                                className="border border-white/8 bg-white/[0.02] backdrop-blur-sm rounded-3xl p-7 md:p-9 space-y-5"
+                                className="border border-[#111111]/8 bg-white backdrop-blur-sm rounded-3xl p-7 md:p-9 space-y-5"
                             >
                                 {/* Name + Email row */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="space-y-1.5">
-                                        <label className="text-xs text-white/40 tracking-wider uppercase">Your Name *</label>
+                                        <label className="text-xs text-[#111111]/45 tracking-wider uppercase">Your Name *</label>
                                         <input
                                             type="text"
                                             required
@@ -333,11 +333,11 @@ export default function Contact() {
                                             onFocus={() => setFocused("name")}
                                             onBlur={() => setFocused(null)}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className={`${inputBase} ${focused === "name" ? "border-yellow-400/60" : ""}`}
+                                            className={`${inputBase} ${focused === "name" ? "border-[#F97316]/60" : ""}`}
                                         />
                                     </div>
                                     <div className="space-y-1.5">
-                                        <label className="text-xs text-white/40 tracking-wider uppercase">Email *</label>
+                                        <label className="text-xs text-[#111111]/45 tracking-wider uppercase">Email *</label>
                                         <input
                                             type="email"
                                             required
@@ -346,14 +346,14 @@ export default function Contact() {
                                             onFocus={() => setFocused("email")}
                                             onBlur={() => setFocused(null)}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className={`${inputBase} ${focused === "email" ? "border-yellow-400/60" : ""}`}
+                                            className={`${inputBase} ${focused === "email" ? "border-[#F97316]/60" : ""}`}
                                         />
                                     </div>
                                 </div>
 
                                 {/* Company */}
                                 <div className="space-y-1.5">
-                                    <label className="text-xs text-white/40 tracking-wider uppercase">Company / Brand</label>
+                                    <label className="text-xs text-[#111111]/45 tracking-wider uppercase">Company / Brand</label>
                                     <input
                                         type="text"
                                         placeholder="Your company name"
@@ -361,13 +361,13 @@ export default function Contact() {
                                         onFocus={() => setFocused("company")}
                                         onBlur={() => setFocused(null)}
                                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                                        className={`${inputBase} ${focused === "company" ? "border-yellow-400/60" : ""}`}
+                                        className={`${inputBase} ${focused === "company" ? "border-[#F97316]/60" : ""}`}
                                     />
                                 </div>
 
                                 {/* Service selector */}
                                 <div className="space-y-2">
-                                    <label className="text-xs text-white/40 tracking-wider uppercase">
+                                    <label className="text-xs text-[#111111]/45 tracking-wider uppercase">
                                         I&apos;m interested in...
                                     </label>
                                     <div className="flex flex-wrap gap-2">
@@ -377,8 +377,8 @@ export default function Contact() {
                                                 type="button"
                                                 onClick={() => setFormData({ ...formData, service: s })}
                                                 className={`text-xs px-3.5 py-2 rounded-full border transition-all duration-200 ${formData.service === s
-                                                        ? "border-yellow-400 bg-yellow-400/15 text-yellow-400"
-                                                        : "border-white/10 text-white/40 hover:border-white/25 hover:text-white/70"
+                                                    ? "border-[#F97316] bg-[#F97316]/15 text-[#F97316]"
+                                                    : "border-[#111111]/12 text-[#111111]/45 hover:border-[#111111]/30 hover:text-[#111111]/70"
                                                     }`}
                                             >
                                                 {s}
@@ -389,7 +389,7 @@ export default function Contact() {
 
                                 {/* Message */}
                                 <div className="space-y-1.5">
-                                    <label className="text-xs text-white/40 tracking-wider uppercase">Your Brief *</label>
+                                    <label className="text-xs text-[#111111]/45 tracking-wider uppercase">Your Brief *</label>
                                     <textarea
                                         required
                                         rows={4}
@@ -398,7 +398,7 @@ export default function Contact() {
                                         onFocus={() => setFocused("message")}
                                         onBlur={() => setFocused(null)}
                                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                        className={`${inputBase} resize-none ${focused === "message" ? "border-yellow-400/60" : ""}`}
+                                        className={`${inputBase} resize-none ${focused === "message" ? "border-[#F97316]/60" : ""}`}
                                     />
                                 </div>
 
@@ -407,13 +407,13 @@ export default function Contact() {
                                     type="submit"
                                     className="submit-btn group w-full relative overflow-hidden rounded-xl py-4 px-6 font-semibold text-sm tracking-wide transition-all duration-300"
                                     style={{
-                                        background: "linear-gradient(135deg, #facc15 0%, #f59e0b 100%)",
-                                        color: "#0a0a0a",
+                                        background: "linear-gradient(135deg, #F97316 0%, #ea6c0a 100%)",
+                                        color: "#ffffff",
                                     }}
                                 >
                                     {/* Shimmer effect */}
                                     <span
-                                        className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
+                                        className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
                                         style={{
                                             background:
                                                 "linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)",
@@ -425,7 +425,7 @@ export default function Contact() {
                                     </span>
                                 </button>
 
-                                <p className="text-center text-xs text-white/20">
+                                <p className="text-center text-xs text-[#111111]/25">
                                     No spam. Ever. We respond within 24 hours.
                                 </p>
                             </form>
