@@ -1,11 +1,8 @@
-import Navbar from "@/components/navbar/page";
-import Home from "@/components/home/page";
-import Contact from "@/components/contact/page";
-import OurWork from "@/components/our-work/page";
-import Service from "@/components/service/page";
-import Careers from "@/components/careers/page";
-import Blogs from "@/components/blogs/page";
-import About from "@/components/about/page";
+import Navbar from "@/components/navbar/Navbar";
+import Home from "@/components/home/Home";
+import About from "@/components/about/About";
+import Service from "@/components/services/Services";
+import Careers from "@/components/careers/Careers";
 import Footer from "@/components/footer/footer";
 
 export default function HomePage() {
@@ -13,13 +10,10 @@ export default function HomePage() {
     <div>
       <Navbar />
       <main>
-        <Home />
-        <About />
-        <Service />
-        <OurWork />
-        <Blogs />
-        <Careers />
-        <Contact />
+        <section id="home"><Home /></section>
+        <section id="about"><About /></section>
+        <section id="services"><Service /></section>
+        <section id="careers"><Careers /></section>
       </main>
       <Footer />
     </div>

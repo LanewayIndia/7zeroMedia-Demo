@@ -1,6 +1,6 @@
 "use client"
 
-export default function Service(){
+export default function Services(){
     return(
         <>
         </>
