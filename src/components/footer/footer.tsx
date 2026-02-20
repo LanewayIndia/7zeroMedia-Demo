@@ -104,7 +104,6 @@ export default function Footer() {
                                 className="w-auto h-10 rounded-full"
                                 priority
                             />
-                            7ZeroMedia
                         </span>
                     </Link>
                     <p className="text-white/50 text-sm leading-relaxed mb-6">
@@ -163,16 +162,20 @@ export default function Footer() {
                 <div ref={contactRef}>
                     <h3 className="text-xs tracking-widest uppercase text-white/40 mb-5">Contact Info</h3>
                     <ul className="space-y-4 text-sm text-white/60">
-                        <li className="flex items-start gap-2">
+                        <li className="items-start gap-2">
                             <span>📍</span>
-                            <span>Head Office <br />
-                                1087 B, Sankranthi, Perumbaikkad <br />
-
+                            <strong>Head Office</strong> 
+                            <br />
+                            <span>1087 B, Sankranthi, Perumbaikkad 
+                                <br />
                                 Kottayam - 686016, Kerala</span>
+                            <br/>
                             <br />
                             <span>📍</span>
-                            <span>Operational Office <br />
-                                Koramangala 8th Blockd <br />
+                            <strong>Operational Office</strong> 
+                            <br />
+                            <span>Koramangala 8th Blockd 
+                                <br />
 
                                 Bangalore - 560095, Karnataka</span>
                         </li>
@@ -185,20 +188,19 @@ export default function Footer() {
                         <li className="flex items-start gap-2">
                             <span>📞</span>
                             <a href="tel:+1234567890" className="hover:text-white transition-colors">
-                               +91 9961348942
+                                +91 9961348942
                             </a>
                         </li>
                     </ul>
                 </div>
 
                 {/* Bottom Bar */}
-                <div ref={bottomBarRef} className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
+                <div ref={bottomBarRef} className="flex border-t border-white/10 pt-6 flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
                     <p>© {new Date().getFullYear()} 7ZeroMedia. All rights reserved.</p>
                     <div className="flex gap-4">
                         <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-white/60 transition-colors">Terms of Service</Link>
                     </div>
-
                 </div>
             </div>
         </footer>

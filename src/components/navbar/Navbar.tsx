@@ -92,13 +92,13 @@ return (
             </Button>
 
             <div ref={LinksRef} className="hidden md:flex items-center mx-auto my-auto justify-center gap-10">
-                <Link href="#">Home</Link>
-                <Link href="#about">About</Link>
-                <Link href="#services">Services</Link>
+                <Link href="/">Home</Link>
+                <Link href="/about">About</Link>
+                <Link href="/services">Services</Link>
                 {/* <Link href="#our-work">Our Work</Link> */}
                 {/* <Link href="#blog">Blog</Link> */}
-                <Link href="#careers">Careers</Link>
-                <Link href="#contact">Contact</Link>
+                <Link href="/careers">Careers</Link>
+                <Link href="/contact">Contact</Link>
             </div>
             <div ref={buttonRef} className="hidden md:flex gap-2 items-center justify-start">
                 <Button><Link href="/auth/sign-up">Sign-up</Link></Button>

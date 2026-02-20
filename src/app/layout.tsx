@@ -64,7 +64,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} antialiased`}>
       <head></head>
-      <body className="font-sans bg-background text-foreground">
+      <body className="font-sans bg-background text-foreground"
+        data-new-gr-c-s-check-loaded="14.1274.0"
+        data-gr-ext-installed="">
         {children}
       </body>
     </html>
