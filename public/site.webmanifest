@@ -1,0 +1,25 @@
+{
+    "name": "7ZeroMedia",
+    "short_name": "7Zero",
+    "description": "AI-powered media and marketing agency — brand strategy, content creation, social media, and cinematic production.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#F97316",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "48x48",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["business", "productivity"],
+    "lang": "en-US"
+}

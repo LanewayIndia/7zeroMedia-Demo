@@ -163,7 +163,7 @@ export default function Hero() {
                         surrounding content context. Pure decorative rhythm.
                     */}
                     <span className="text-[#111111]/20" aria-hidden="true">
-                        Systems That
+                        System That
                     </span>
                     <br />
                     {/*
