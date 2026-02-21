@@ -342,4 +342,21 @@ iframe {
   padding: 0.6rem 1rem;
   font-size: 0.875rem;
 }
+/* ─── Hero: CSS-first pre-animation states ───────────────────────────────────
+   Elements start hidden at CSS parse time — prevents FOUC between SSR HTML
+   delivery and GSAP hydration. GSAP animates them in; clearProps removes these
+   inline styles afterwards so no layout side-effects remain.
+   The reduced-motion block ensures users who opt out see content immediately.
+──────────────────────────────────────────────────────────────────────────── */
+.hero-animate {
+  opacity: 0;
+  will-change: opacity, transform;
+}
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}

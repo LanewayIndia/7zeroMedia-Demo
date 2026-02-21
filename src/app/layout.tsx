@@ -52,8 +52,7 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  minimumScale: 1,
 }
 
 export default function RootLayout({
@@ -66,7 +65,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${inter.variable} antialiased`}
     >
-      <body className="font-sans bg-background text-foreground overflow-x-hidden">
+      <body className="font-sans bg-background text-foreground">
         <PageTransition>
           {children}
         </PageTransition>
