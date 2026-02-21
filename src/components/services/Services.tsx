@@ -303,19 +303,19 @@ export default function Services() {
                     {/* 6-card grid */}
                     <div
                         ref={gridRef}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+                        className="grid grid-cols-1 gap-5"
                     >
                         {services.map((service) => {
                             const Icon = service.icon
                             return (
                                 <div
                                     key={service.headline}
-                                    className="group relative bg-white border border-[#111111]/6 rounded-2xl p-7 flex flex-col gap-5 hover:shadow-[0_8px_40px_rgba(249,115,22,0.10)] hover:border-[#F97316]/30 hover:-translate-y-1 transition-all duration-300"
+                                    className="group relative bg-white border border-[#111111]/6 rounded-2xl p-10 flex flex-col gap-6 hover:shadow-[0_8px_40px_rgba(249,115,22,0.10)] hover:border-[#F97316]/30 hover:-translate-y-1 transition-all duration-300"
                                 >
                                     {/* Icon + tag row */}
                                     <div className="flex items-center justify-between">
-                                        <div className="w-11 h-11 rounded-xl bg-[#F97316]/8 flex items-center justify-center group-hover:bg-[#F97316]/15 transition-colors">
-                                            <Icon size={20} className="text-[#F97316]" />
+                                        <div className="w-14 h-14 rounded-xl bg-[#F97316]/8 flex items-center justify-center group-hover:bg-[#F97316]/15 transition-colors">
+                                            <Icon size={28} className="text-[#F97316]" />
                                         </div>
                                         <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F97316]/70 px-2.5 py-1 border border-[#F97316]/20 rounded-full">
                                             {service.tag}
@@ -323,20 +323,20 @@ export default function Services() {
                                     </div>
 
                                     {/* Headline */}
-                                    <h3 className="text-xl font-bold text-[#111111] leading-tight">
+                                    <h3 className="text-2xl font-bold text-[#111111] leading-tight">
                                         {service.headline}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="text-sm text-[#111111]/50 leading-relaxed flex-1">
+                                    <p className="text-base text-[#111111]/50 leading-relaxed flex-1">
                                         {service.description}
                                     </p>
 
                                     {/* Bullets */}
-                                    <ul className="space-y-1.5">
+                                    <ul className="space-y-2.5">
                                         {service.bullets.map((b) => (
-                                            <li key={b} className="flex items-center gap-2 text-xs text-[#111111]/55">
-                                                <span className="w-1 h-1 rounded-full bg-[#F97316] shrink-0" />
+                                            <li key={b} className="flex items-center gap-2.5 text-sm text-[#111111]/55">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] shrink-0" />
                                                 {b}
                                             </li>
                                         ))}
@@ -345,7 +345,7 @@ export default function Services() {
                                     {/* CTA link */}
                                     <Link
                                         href={service.href}
-                                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#111111]/40 group-hover:text-[#F97316] transition-colors duration-200 mt-1"
+                                        className="inline-flex items-center gap-2 text-sm font-semibold text-[#111111]/40 group-hover:text-[#F97316] transition-colors duration-200 mt-2"
                                     >
                                         Learn more
                                         <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
