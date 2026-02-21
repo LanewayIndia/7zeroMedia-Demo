@@ -54,7 +54,7 @@ export const metadata: Metadata = {
      `default` is shown on pages that export no metadata at all.
   ──────────────────────────────────────────────────────────────────────── */
   title: {
-    default: "7ZeroMedia — AI-Powered Media & Marketing Agency",
+    default: "7ZeroMedia — AI-Powered Growth for Modern brands",
     template: "%s | 7ZeroMedia",
   },
 
@@ -122,7 +122,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: BASE_URL,
     siteName: "7ZeroMedia",
-    title: "7ZeroMedia — AI-Powered Media & Marketing Agency",
+    title: "7ZeroMedia — AI-Powered Growth for Modern Brands",
     description:
       "AI-driven brand strategy, content creation, social media, and cinematic production — one growth engine for ambitious brands.",
     images: [OG_IMAGE],
@@ -133,7 +133,7 @@ export const metadata: Metadata = {
   ──────────────────────────────────────────────────────────────────────── */
   twitter: {
     card: "summary_large_image",
-    title: "7ZeroMedia — AI-Powered Media & Marketing Agency",
+    title: "7ZeroMedia — AI-Powered Growths for Modern Brands",
     description:
       "AI-driven brand strategy, content creation, social media, and cinematic production — one growth engine for ambitious brands.",
     images: [OG_IMAGE.url],
@@ -203,11 +203,9 @@ const organizationSchema = {
   },
   description:
     "7ZeroMedia is an AI-powered media and marketing agency specialising in brand strategy, content creation, social media management, and cinematic production.",
-  foundingDate: "2024",
   contactPoint: [
     {
       "@type": "ContactPoint",
-      telephone: "+91-9961348942",
       contactType: "customer service",
       email: "info@7zero.media",
       areaServed: "IN",
