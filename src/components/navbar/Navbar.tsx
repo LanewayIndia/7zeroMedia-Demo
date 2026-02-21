@@ -127,7 +127,7 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div ref={buttonRef} className="hidden md:flex gap-2 items-center justify-start">
-                    <Button className="bg-[#F97316] text-white hover:bg-[#ea6c0a] border-none"><Link href="/auth/signup" className="font-normal text-white">Start Your Growth Here</Link></Button>
+                    <Button className="bg-[#F97316] text-white hover:bg-[#ea6c0a] border-none p-8 text-l"><Link href="/auth/signup" className="font-normal text-white">Start Your Growth Here</Link></Button>
                     {/* <Button className="bg-[#111111] text-white hover:bg-[#2a2a2a] border-none"><Link href="/auth/sign-in" className="font-normal text-white">Sign-in</Link></Button> */}
                 </div>
             </nav>

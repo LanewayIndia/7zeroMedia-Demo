@@ -35,7 +35,7 @@ export default function Home() {
     }, [])
 
     return (
-        <section className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden px-6 md:px-16 lg:px-24 pt-32 pb-24 bg-white">
+        <section className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden px-6 md:px-16 lg:px-24 pt-12 pb-12">
 
             {/* ── Background decorations ── */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -55,7 +55,7 @@ export default function Home() {
                     }}
                 />
                 {/* Abstract AI node diagram — right side */}
-                <svg
+                {/* <svg
                     className="absolute right-0 top-1/2 -translate-y-1/2 w-[520px] opacity-[0.045]"
                     viewBox="0 0 520 520"
                     fill="none"
@@ -70,7 +70,7 @@ export default function Home() {
                     <line x1="260" y1="60" x2="260" y2="200" stroke="#F97316" strokeWidth="1" opacity="0.4" />
                     <line x1="460" y1="260" x2="390" y2="260" stroke="#111" strokeWidth="1" opacity="0.3" />
                     <line x1="60" y1="260" x2="130" y2="260" stroke="#111" strokeWidth="1" opacity="0.3" />
-                </svg>
+                </svg> */}
             </div>
 
             {/* ── Content ── */}

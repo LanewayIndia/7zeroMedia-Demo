@@ -66,7 +66,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${inter.variable} antialiased`}
     >
-      <body className="font-sans bg-background text-foreground overflow-x-hidden">
+      <body className="font-sans bg-background text-foreground overflow-hidden">
         <PageTransition>
           {children}
         </PageTransition>
