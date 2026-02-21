@@ -94,7 +94,7 @@ export default function Navbar() {
     return (
         <div>
             <nav ref={navRef} className="flex items-center px-4 md:px-10 bg-white/80 backdrop-blur-md">
-                <div ref={logoRef} className="flex items-center justify-start md:px-10">
+                <div ref={logoRef} className="flex items-center justify-start md:px-10 py-2">
                     <Image src="/logo.png" alt="Logo" width={100} height={100} className="rounded-full" />
                 </div>
 
@@ -127,8 +127,8 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div ref={buttonRef} className="hidden md:flex gap-2 items-center justify-start">
-                    <Button className="bg-[#F97316] text-white hover:bg-[#ea6c0a] border-none"><Link href="/auth/sign-up" className="font-normal text-white">Sign-up</Link></Button>
-                    <Button className="bg-[#111111] text-white hover:bg-[#2a2a2a] border-none"><Link href="/auth/sign-in" className="font-normal text-white">Sign-in</Link></Button>
+                    <Button className="bg-[#F97316] text-white hover:bg-[#ea6c0a] border-none"><Link href="/auth/signup" className="font-normal text-white">Start Your Growth Here</Link></Button>
+                    {/* <Button className="bg-[#111111] text-white hover:bg-[#2a2a2a] border-none"><Link href="/auth/sign-in" className="font-normal text-white">Sign-in</Link></Button> */}
                 </div>
             </nav>
             {/* Mobile Menu */}
@@ -143,8 +143,8 @@ export default function Navbar() {
                     <Link href="#contact" onClick={() => setMenuOpen(false)} className="text-[#111111] hover:text-[#F97316] transition-colors">Contact</Link>
 
                     <div className="flex gap-2 pt-2">
-                        <Button className="bg-[#F97316] text-white hover:bg-[#ea6c0a] border-none"><Link href="/auth/sign-up" className="text-white">Sign-up</Link></Button>
-                        <Button className="bg-[#111111] text-white hover:bg-[#2a2a2a] border-none"><Link href="/auth/sign-in" className="text-white">Sign-in</Link></Button>
+                        <Button className="bg-[#F97316] text-white hover:bg-[#ea6c0a] border-none"><Link href="/auth/signup" className="text-white">Start Your Growth Here</Link></Button>
+                        {/* <Button className="bg-[#111111] text-white hover:bg-[#2a2a2a] border-none"><Link href="/auth/sign-in" className="text-white"></Link></Button> */}
                     </div>
                 </div>
             )}
