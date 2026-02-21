@@ -106,6 +106,8 @@ export default function Services() {
     const blueprintRef = useRef<HTMLDivElement>(null)
     const processRef = useRef<HTMLDivElement>(null)
     const ctaRef = useRef<HTMLDivElement>(null)
+    const processWrapperRef = useRef<HTMLDivElement>(null)
+    const processStickyRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -169,26 +171,34 @@ export default function Services() {
                 }
             )
 
-            // ── 4. Process steps — stagger on scroll
-            if (processRef.current) {
+            // ── 4. Process Section — Sticky Left + Scroll Right
+            if (processWrapperRef.current && processStickyRef.current) {
+                ScrollTrigger.create({
+                    trigger: processWrapperRef.current,
+                    start: "top top",
+                    end: "bottom bottom",
+                    pin: processStickyRef.current,
+                    pinSpacing: false,
+                })
+
                 gsap.fromTo(
-                    Array.from(processRef.current.children),
-                    { y: 40, opacity: 0 },
+                    Array.from(processRef.current?.children || []),
+                    { y: 60, opacity: 0 },
                     {
                         y: 0,
                         opacity: 1,
-                        duration: 0.65,
-                        stagger: { each: 0.12, ease: "power1.in" },
-                        ease: "power2.out",
+                        stagger: 0.15,
+                        duration: 0.8,
+                        ease: "power3.out",
                         scrollTrigger: {
-                            trigger: processRef.current,
-                            start: "top bottom",
-                            once: true,
+                            trigger: processWrapperRef.current,
+                            start: "top center",
+                            end: "bottom bottom",
+                            scrub: false,
                         },
                     }
                 )
             }
-
             // ── 5. Final CTA
             gsap.fromTo(
                 ctaRef.current,
@@ -229,7 +239,7 @@ export default function Services() {
                 />
                 {/* Orange radial glow — top right */}
                 <div
-                    className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
+                    className="absolute top-0 right-0 w-125 h-125 rounded-full pointer-events-none"
                     style={{ background: "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 65%)" }}
                 />
 
@@ -374,7 +384,7 @@ export default function Services() {
                 />
                 {/* Orange glow */}
                 <div
-                    className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full pointer-events-none"
+                    className="absolute top-[-20%] right-[-10%] w-200 h-200 rounded-full pointer-events-none"
                     style={{ background: "radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 60%)" }}
                 />
 
@@ -449,52 +459,61 @@ export default function Services() {
             </section>
 
             {/* ══════════════════════════════════════════
-                PROCESS SECTION
-            ══════════════════════════════════════════ */}
-            <section className="bg-white px-6 md:px-16 lg:px-24 py-24">
-                <div className="max-w-7xl mx-auto">
+                   PROCESS SECTION (Sticky Layout)
+                ══════════════════════════════════════════ */}
+            <section
+                ref={processWrapperRef}
+                className="bg-white px-6 md:px-16 lg:px-24 py-32"
+            >
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
 
-                    {/* Header */}
-                    <div className="mb-16 text-center">
+                    {/* LEFT SIDE — STICKY */}
+                    <div
+                        ref={processStickyRef}
+                        className="h-fit lg:sticky lg:top-32"
+                    >
                         <span className="text-xs font-semibold tracking-[0.25em] uppercase text-[#F97316] mb-4 block">
                             How We Operate
                         </span>
+
                         <h2 className="text-4xl md:text-5xl font-bold text-[#111111] leading-tight">
                             From Zero to Scale
                         </h2>
-                        <p className="text-[#111111]/45 text-base mt-4 max-w-xl mx-auto leading-relaxed">
-                            A precision-engineered 6-phase system. No fluff. No timelines that slip. Just a repeatable engine for growth.
+
+                        <p className="text-[#111111]/45 text-base mt-6 max-w-md leading-relaxed">
+                            A precision-engineered 6-phase system. No fluff. No timelines that slip.
+                            Just a repeatable engine for growth.
                         </p>
                     </div>
 
-                    {/* Steps */}
+                    {/* RIGHT SIDE — STACKED STEPS */}
                     <div
                         ref={processRef}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                        className="flex flex-col gap-10"
                     >
-                        {processSteps.map((s, i) => {
+                        {processSteps.map((s) => {
                             const Icon = s.icon
                             return (
                                 <div
                                     key={s.step}
-                                    className="relative group bg-[#F8F8F8] border border-[#111111]/6 rounded-2xl p-7 hover:border-[#F97316]/25 hover:shadow-[0_4px_30px_rgba(249,115,22,0.08)] transition-all duration-300"
+                                    className="relative bg-[#F8F8F8] border border-[#111111]/6 rounded-2xl p-8 hover:border-[#F97316]/25 hover:shadow-[0_6px_40px_rgba(249,115,22,0.08)] transition-all duration-300"
                                 >
-                                    {/* Step number — watermark */}
-                                    <span className="absolute top-5 right-6 text-[64px] font-black leading-none text-[#111111]/4 select-none">
+                                    {/* Step number watermark */}
+                                    <span className="absolute top-6 right-8 text-[72px] font-black leading-none text-[#111111]/5 select-none">
                                         {s.step}
                                     </span>
 
-                                    {/* Icon */}
-                                    <div className="w-11 h-11 rounded-xl bg-[#F97316]/8 flex items-center justify-center mb-6 group-hover:bg-[#F97316]/15 transition-colors">
-                                        <Icon size={20} className="text-[#F97316]" />
+                                    <div className="w-12 h-12 rounded-xl bg-[#F97316]/10 flex items-center justify-center mb-6">
+                                        <Icon size={22} className="text-[#F97316]" />
                                     </div>
 
-                                    <h3 className="text-lg font-bold text-[#111111] mb-2">{s.label}</h3>
-                                    <p className="text-sm text-[#111111]/50 leading-relaxed">{s.desc}</p>
+                                    <h3 className="text-xl font-bold text-[#111111] mb-3">
+                                        {s.label}
+                                    </h3>
 
-                                    {i < processSteps.length - 1 && (
-                                        <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-px bg-[#111111]/10" />
-                                    )}
+                                    <p className="text-sm text-[#111111]/55 leading-relaxed max-w-md">
+                                        {s.desc}
+                                    </p>
                                 </div>
                             )
                         })}
