@@ -1,6 +1,7 @@
-import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata, Viewport } from "next"
+import { Playfair_Display, Inter } from "next/font/google"
+import PageTransition from "@/components/PageTransition"
+import "./globals.css"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -17,15 +18,14 @@ const siteUrl = "http://localhost:3000/"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  icons: {
-    icon: "/favicon.ico",
-  },
+  icons: { icon: "/favicon.ico" },
   title: "7zeroMedia",
-  description: "7zeroMedia - Marketing, Branding, Content Creation, Filming Company",
-
+  description:
+    "7zeroMedia - Marketing, Branding, Content Creation, Filming Company",
   openGraph: {
     title: "7zeroMedia",
-    description: "7zeroMedia - Marketing, Branding, Content Creation, Filming Company",
+    description:
+      "7zeroMedia - Marketing, Branding, Content Creation, Filming Company",
     url: siteUrl,
     siteName: "7zeroMedia",
     images: [
@@ -39,14 +39,14 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
     title: "7zeroMedia",
-    description: "7zeroMedia - Marketing, Branding, Content Creation, Filming Company",
+    description:
+      "7zeroMedia - Marketing, Branding, Content Creation, Filming Company",
     images: [`${siteUrl}/logo.png`],
   },
-};
+}
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -58,17 +58,19 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable} antialiased`}>
-      <head></head>
-      <body className="font-sans bg-background text-foreground"
-        data-new-gr-c-s-check-loaded="14.1274.0"
-        data-gr-ext-installed="">
-        {children}
+    <html
+      lang="en"
+      className={`${playfair.variable} ${inter.variable} antialiased`}
+    >
+      <body className="font-sans bg-background text-foreground overflow-x-hidden">
+        <PageTransition>
+          {children}
+        </PageTransition>
       </body>
     </html>
-  );
+  )
 }
