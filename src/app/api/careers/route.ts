@@ -44,9 +44,29 @@ const transporter = nodemailer.createTransport({
 function sanitize(val: FormDataEntryValue | null, maxLen = 2000): string {
   if (typeof val !== "string") return "";
   return val
-    .replace(/<[^>]*>/g, "")
+    .replace(/<[^>]*>/g, "") // strip HTML tags
+    .replace(/[\r\n]/g, " ") // flatten newlines — prevents SMTP header injection
     .trim()
     .slice(0, maxLen);
+}
+
+/** HTML-encode the five dangerous characters to prevent injection into the email body. */
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+/** Return a safe attachment filename — strip path traversal and HTML special chars. */
+function safeFilename(raw: string): string {
+  return raw
+    .replace(/[\\/:*?"<>|]/g, "_") // Windows-unsafe path chars
+    .replace(/\.\./g, "_") // path traversal sequences
+    .trim()
+    .slice(0, 255);
 }
 
 function isValidUrl(value: string): boolean {
@@ -171,7 +191,7 @@ export async function POST(req: NextRequest) {
             <td style="background:linear-gradient(135deg,#F97316 0%,#ea6c0a 100%);padding:28px 36px;">
               <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.75);">7ZeroMedia — Careers</p>
               <h1 style="margin:8px 0 0;font-size:20px;font-weight:700;color:#ffffff;line-height:1.3;">New Application Received</h1>
-              ${jobTitle ? `<p style="margin:8px 0 0;font-size:14px;color:rgba(255,255,255,0.85);">Position: <strong>${jobTitle}</strong></p>` : ""}
+              ${jobTitle ? `<p style="margin:8px 0 0;font-size:14px;color:rgba(255,255,255,0.85);">Position: <strong>${escapeHtml(jobTitle)}</strong></p>` : ""}
             </td>
           </tr>
 
@@ -183,21 +203,21 @@ export async function POST(req: NextRequest) {
                 <!-- Name -->
                 <tr><td style="padding:0 0 18px;">
                   <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Full Name</p>
-                  <p style="margin:0;font-size:15px;color:#111111;font-weight:600;">${name}</p>
+                  <p style="margin:0;font-size:15px;color:#111111;font-weight:600;">${escapeHtml(name)}</p>
                 </td></tr>
 
                 <!-- Email -->
                 <tr><td style="padding:0 0 18px;">
                   <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Email</p>
                   <p style="margin:0;font-size:15px;color:#111111;">
-                    <a href="mailto:${email}" style="color:#F97316;text-decoration:none;">${email}</a>
+                    <a href="mailto:${escapeHtml(email)}" style="color:#F97316;text-decoration:none;">${escapeHtml(email)}</a>
                   </p>
                 </td></tr>
 
                 <!-- Experience -->
                 <tr><td style="padding:0 0 18px;">
                   <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Experience Level</p>
-                  <p style="margin:0;display:inline-block;font-size:13px;font-weight:600;color:#F97316;background:rgba(249,115,22,0.10);border:1px solid rgba(249,115,22,0.25);border-radius:100px;padding:4px 14px;">${experience}</p>
+                  <p style="margin:0;display:inline-block;font-size:13px;font-weight:600;color:#F97316;background:rgba(249,115,22,0.10);border:1px solid rgba(249,115,22,0.25);border-radius:100px;padding:4px 14px;">${escapeHtml(experience)}</p>
                 </td></tr>
 
                 ${
@@ -206,7 +226,7 @@ export async function POST(req: NextRequest) {
                 <!-- Portfolio -->
                 <tr><td style="padding:0 0 18px;">
                   <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Portfolio</p>
-                  <p style="margin:0;font-size:14px;"><a href="${portfolio}" style="color:#F97316;text-decoration:none;">${portfolio}</a></p>
+                  <p style="margin:0;font-size:14px;"><a href="${escapeHtml(portfolio)}" style="color:#F97316;text-decoration:none;">${escapeHtml(portfolio)}</a></p>
                 </td></tr>`
                     : ""
                 }
@@ -217,7 +237,7 @@ export async function POST(req: NextRequest) {
                 <!-- LinkedIn -->
                 <tr><td style="padding:0 0 18px;">
                   <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">LinkedIn</p>
-                  <p style="margin:0;font-size:14px;"><a href="${linkedin}" style="color:#F97316;text-decoration:none;">${linkedin}</a></p>
+                  <p style="margin:0;font-size:14px;"><a href="${escapeHtml(linkedin)}" style="color:#F97316;text-decoration:none;">${escapeHtml(linkedin)}</a></p>
                 </td></tr>`
                     : ""
                 }
@@ -228,7 +248,7 @@ export async function POST(req: NextRequest) {
                 <!-- GitHub -->
                 <tr><td style="padding:0 0 18px;">
                   <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">GitHub</p>
-                  <p style="margin:0;font-size:14px;"><a href="${github}" style="color:#F97316;text-decoration:none;">${github}</a></p>
+                  <p style="margin:0;font-size:14px;"><a href="${escapeHtml(github)}" style="color:#F97316;text-decoration:none;">${escapeHtml(github)}</a></p>
                 </td></tr>`
                     : ""
                 }
@@ -237,7 +257,7 @@ export async function POST(req: NextRequest) {
                 <tr><td style="padding:0 0 4px;">
                   <p style="margin:0 0 10px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">About the Candidate</p>
                   <div style="background:#F8F8F8;border-radius:12px;padding:16px 20px;border:1px solid rgba(0,0,0,0.06);">
-                    <p style="margin:0;font-size:14px;line-height:1.7;color:#444444;white-space:pre-wrap;">${about}</p>
+                    <p style="margin:0;font-size:14px;line-height:1.7;color:#444444;white-space:pre-wrap;">${escapeHtml(about)}</p>
                   </div>
                 </td></tr>
 
@@ -248,7 +268,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td>
                     <p style="margin:0;font-size:13px;color:#555555;">
-                      📎 <strong>CV is attached</strong> to this email as <em>${cvFile?.name ?? "cv"}</em>.
+                      📎 <strong>CV is attached</strong> to this email as <em>${escapeHtml(cvFile?.name ? safeFilename(cvFile.name) : "cv")}</em>.
                     </p>
                   </td>
                 </tr>
@@ -258,9 +278,9 @@ export async function POST(req: NextRequest) {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:28px;">
                 <tr>
                   <td>
-                    <a href="mailto:${email}?subject=Re: Your application for ${encodeURIComponent(jobTitle || "the position")} at 7ZeroMedia"
+                    <a href="mailto:${escapeHtml(email)}?subject=Re: Your application for ${encodeURIComponent(jobTitle || "the position")} at 7ZeroMedia"
                        style="display:inline-block;background:linear-gradient(135deg,#F97316 0%,#ea6c0a 100%);color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;padding:12px 28px;border-radius:10px;">
-                      Reply to ${name}
+                      Reply to ${escapeHtml(name)}
                     </a>
                   </td>
                 </tr>
@@ -290,7 +310,7 @@ export async function POST(req: NextRequest) {
     const cvBuffer = Buffer.from(await cvFile.arrayBuffer());
     cvAttachment = [
       {
-        filename: cvFile.name,
+        filename: safeFilename(cvFile.name), // sanitize filename before attaching
         content: cvBuffer,
         contentType: cvFile.type,
       },

@@ -39,9 +39,20 @@ const transporter = nodemailer.createTransport({
 function sanitize(str: unknown, maxLen = 2000): string {
   if (typeof str !== "string") return "";
   return str
-    .replace(/<[^>]*>/g, "")
+    .replace(/<[^>]*>/g, "") // strip any HTML tags
+    .replace(/[\r\n]/g, " ") // collapse newlines — prevents SMTP header injection
     .trim()
     .slice(0, maxLen);
+}
+
+/** HTML-encode the five dangerous characters to prevent injection into the email body. */
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 /* ─── POST Handler ───────────────────────────────────────────────────────── */
@@ -144,14 +155,14 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="padding:0 0 20px;">
                     <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Name</p>
-                    <p style="margin:0;font-size:15px;color:#111111;font-weight:600;">${name}</p>
+                    <p style="margin:0;font-size:15px;color:#111111;font-weight:600;">${escapeHtml(name)}</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:0 0 20px;">
                     <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Email</p>
                     <p style="margin:0;font-size:15px;color:#111111;">
-                      <a href="mailto:${email}" style="color:#F97316;text-decoration:none;">${email}</a>
+                      <a href="mailto:${escapeHtml(email)}" style="color:#F97316;text-decoration:none;">${escapeHtml(email)}</a>
                     </p>
                   </td>
                 </tr>
@@ -161,7 +172,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="padding:0 0 20px;">
                     <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Company / Brand</p>
-                    <p style="margin:0;font-size:15px;color:#111111;">${company}</p>
+                    <p style="margin:0;font-size:15px;color:#111111;">${escapeHtml(company)}</p>
                   </td>
                 </tr>`
                     : ""
@@ -172,7 +183,7 @@ export async function POST(req: NextRequest) {
                 <tr>
                   <td style="padding:0 0 20px;">
                     <p style="margin:0 0 4px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Service Interested In</p>
-                    <p style="margin:0;display:inline-block;font-size:13px;font-weight:600;color:#F97316;background:rgba(249,115,22,0.10);border:1px solid rgba(249,115,22,0.25);border-radius:100px;padding:4px 14px;">${service}</p>
+                    <p style="margin:0;display:inline-block;font-size:13px;font-weight:600;color:#F97316;background:rgba(249,115,22,0.10);border:1px solid rgba(249,115,22,0.25);border-radius:100px;padding:4px 14px;">${escapeHtml(service)}</p>
                   </td>
                 </tr>`
                     : ""
@@ -181,7 +192,7 @@ export async function POST(req: NextRequest) {
                   <td style="padding:0 0 4px;">
                     <p style="margin:0 0 10px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#F97316;">Message</p>
                     <div style="background:#F8F8F8;border-radius:12px;padding:16px 20px;border:1px solid rgba(0,0,0,0.06);">
-                      <p style="margin:0;font-size:14px;line-height:1.7;color:#444444;white-space:pre-wrap;">${message}</p>
+                      <p style="margin:0;font-size:14px;line-height:1.7;color:#444444;white-space:pre-wrap;">${escapeHtml(message)}</p>
                     </div>
                   </td>
                 </tr>
@@ -191,9 +202,9 @@ export async function POST(req: NextRequest) {
               <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
                 <tr>
                   <td>
-                    <a href="mailto:${email}?subject=Re: Your inquiry to 7ZeroMedia"
+                    <a href="mailto:${escapeHtml(email)}?subject=Re: Your inquiry to 7ZeroMedia"
                        style="display:inline-block;background:linear-gradient(135deg,#F97316 0%,#ea6c0a 100%);color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;padding:12px 28px;border-radius:10px;">
-                      Reply to ${name}
+                      Reply to ${escapeHtml(name)}
                     </a>
                   </td>
                 </tr>

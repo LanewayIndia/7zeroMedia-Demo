@@ -153,10 +153,12 @@ export default function Services() {
     const pageDivRef = useRef<HTMLDivElement>(null)
 
     // Scroll-section refs
-    const gridRef = useRef<HTMLDivElement>(null)
+    const stackWrapRef = useRef<HTMLDivElement>(null)   // wraps the grid — perspective origin for depth
+    const row0Ref = useRef<HTMLDivElement>(null)   // first  row of cards (cards 0-2)
+    const row1Ref = useRef<HTMLDivElement>(null)   // second row of cards (cards 3-5)
     const blueprintRef = useRef<HTMLElement>(null)
     const processRef = useRef<HTMLDivElement>(null)
-    const processWrapperRef = useRef<HTMLElement>(null)   // kept as ref so GSAP can scope trigger
+    const processWrapperRef = useRef<HTMLElement>(null)  // process section wrapper
     const ctaRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -201,27 +203,134 @@ export default function Services() {
                     )
             }
 
-            // ── 2. Service cards — stagger on scroll ────────────────────────
-            if (gridRef.current) {
-                gsap.fromTo(
-                    Array.from(gridRef.current.children),
-                    { y: 50, opacity: 0 },
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.7,
-                        stagger: { each: 0.09, ease: "power1.in" },
-                        ease: "power3.out",
-                        clearProps: "transform,opacity,willChange",
-                        scrollTrigger: {
-                            trigger: gridRef.current,
-                            start: "top 85%",
-                            once: true,              // never re-fires; safe for HMR
-                            invalidateOnRefresh: true,
-                        },
+            // ── 2. Service cards — cinematic scroll stack (desktop) / fade-slide (mobile)
+            //
+            //   ARCHITECTURE DECISION:
+            //   The grid is 3 columns on desktop → the cards form 2 natural rows.
+            //   A true "per-card" pin-stack would require collapsing to 1 column and
+            //   pinning each card, which violates the "no layout changes" constraint.
+            //   Instead we treat each ROW as a single depth layer:
+            //     • Row 1 starts at scale:1, translateY:0
+            //     • As Row 2 scrolls into view, Row 1 compresses (scale→0.92,
+            //       translateY→-80px, opacity→0.55) — giving the illusion it's
+            //       receding into depth behind Row 2.
+            //   This uses ScrollTrigger.matchMedia() to isolate desktop vs mobile
+            //   behaviour and scrub:true for fluid 60fps tracking.
+
+            const mm = ScrollTrigger.matchMedia({
+
+                // ── DESKTOP (≥1024px) — depth stack ─────────────────────────────────
+                "(min-width: 1024px)": () => {
+                    if (!stackWrapRef.current || !row0Ref.current || !row1Ref.current) return
+
+                    // Add perspective to the wrapper so scale transforms look 3D
+                    stackWrapRef.current.style.perspective = "1200px"
+                    stackWrapRef.current.style.perspectiveOrigin = "center top"
+
+                    // Z-index layering — row 1 starts below (lower z), row 2 above
+                    row0Ref.current.style.zIndex = "1"
+                    row1Ref.current.style.zIndex = "2"
+
+                    // Both rows enter from below on initial page reveal (once)
+                    gsap.fromTo(
+                        [row0Ref.current, row1Ref.current],
+                        { y: 60, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.85,
+                            stagger: 0.18,
+                            ease: "power3.out",
+                            // NOTE: clearProps deferred — scrub overwrites transform anyway
+                            scrollTrigger: {
+                                trigger: row0Ref.current,
+                                start: "top 85%",
+                                once: true,
+                                invalidateOnRefresh: true,
+                            },
+                        }
+                    )
+
+                    // As row1 scrolls into the viewport, compress row0 backward
+                    // scrub:1 = 1s of lag for perfect fluidity, no jitter
+                    gsap.fromTo(
+                        row0Ref.current,
+                        { scale: 1, y: 0, opacity: 1 },
+                        {
+                            scale: 0.92,
+                            y: -80,
+                            opacity: 0.5,
+                            ease: "none",   // linear so scrub tracks 1-to-1
+                            scrollTrigger: {
+                                trigger: row1Ref.current,
+                                start: "top 75%",
+                                end: "top 20%",
+                                scrub: 1.2,
+                                invalidateOnRefresh: true,
+                            },
+                        }
+                    )
+
+                    // Row1 rises FROM slightly below into final position (depth reveal)
+                    gsap.fromTo(
+                        row1Ref.current,
+                        { y: 40, scale: 0.98 },
+                        {
+                            y: 0,
+                            scale: 1,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: row1Ref.current,
+                                start: "top 80%",
+                                end: "top 30%",
+                                scrub: 1.2,
+                                invalidateOnRefresh: true,
+                            },
+                        }
+                    )
+
+                    // Cleanup: revert inline styles added above
+                    return () => {
+                        if (stackWrapRef.current) {
+                            stackWrapRef.current.style.perspective = ""
+                            stackWrapRef.current.style.perspectiveOrigin = ""
+                        }
+                        if (row0Ref.current) {
+                            row0Ref.current.style.zIndex = ""
+                            gsap.set(row0Ref.current, { clearProps: "transform,opacity,willChange,zIndex" })
+                        }
+                        if (row1Ref.current) {
+                            row1Ref.current.style.zIndex = ""
+                            gsap.set(row1Ref.current, { clearProps: "transform,opacity,willChange,zIndex" })
+                        }
                     }
-                )
-            }
+                },
+
+                // ── MOBILE / TABLET (<1024px) — simple fade/slide ────────────────────
+                "(max-width: 1023px)": () => {
+                    if (!stackWrapRef.current) return
+                    gsap.fromTo(
+                        Array.from(stackWrapRef.current.querySelectorAll("article")),
+                        { y: 50, opacity: 0 },
+                        {
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.7,
+                            stagger: { each: 0.09, ease: "power1.in" },
+                            ease: "power3.out",
+                            clearProps: "transform,opacity,willChange",
+                            scrollTrigger: {
+                                trigger: stackWrapRef.current,
+                                start: "top 85%",
+                                once: true,
+                                invalidateOnRefresh: true,
+                            },
+                        }
+                    )
+                },
+            })
+
+            // mm.revert() is called by ctx.revert() automatically
 
             // ── 3. Blueprint section ─────────────────────────────────────────
             if (blueprintRef.current) {
@@ -336,7 +445,7 @@ export default function Services() {
                         className="flex items-center gap-2 text-xs font-bold tracking-[0.25em] uppercase text-[#F97316] mb-6"
                     >
                         <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#F97316]" />
-                        Our Services
+                        Our Services | What We Build
                     </span>
 
                     {/* H1 — only one per page */}
@@ -379,75 +488,107 @@ export default function Services() {
             <section
                 id="services-grid"
                 aria-label="Our growth systems"
-                className="px-6 md:px-16 lg:px-24 py-20"
+                className="px-6 md:px-4 lg:px-8 py-5"
             >
                 <div className="max-w-7xl mx-auto">
 
-                    {/* Section header */}
-                    <div className="mb-16">
-                        <span className="text-xs font-semibold tracking-[0.25em] uppercase text-[#F97316] mb-4 block">
-                            What We Build
-                        </span>
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                            <h2 className="text-4xl md:text-5xl font-bold text-[#111111] leading-tight max-w-xl">
-                                Our Growth Systems
-                            </h2>
-                            <p className="text-[#111111]/45 text-base max-w-sm leading-relaxed">
-                                Six precision-engineered systems, one unified growth engine. Each service compounds the next.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* 6-card grid */}
+                    {/* ── 6-card grid
+                        stackWrapRef: receives perspective for 3D depth illusion.
+                        row0Ref / row1Ref: the two logical rows — GSAP treats each
+                        as a single depth layer on desktop (≥1024px).
+                        On mobile the grid reverts to the normal stacked layout;
+                        no ref-based row grouping is active.
+                    */}
                     <div
-                        ref={gridRef}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+                        ref={stackWrapRef}
+                        className="relative"
+                        style={{ transformStyle: "preserve-3d" }}
                     >
-                        {SERVICES.map((service) => {
-                            const Icon = service.icon
-                            return (
-                                <article
-                                    key={service.headline}
-                                    className="group relative bg-white border border-[#111111]/6 rounded-2xl p-10 flex flex-col gap-6 hover:shadow-[0_8px_40px_rgba(249,115,22,0.10)] hover:border-[#F97316]/30 hover:-translate-y-1 transition-all duration-300"
-                                >
-                                    {/* Icon + tag */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="w-14 h-14 rounded-xl bg-[#F97316]/8 flex items-center justify-center group-hover:bg-[#F97316]/15 transition-colors">
-                                            <Icon size={28} className="text-[#F97316]" aria-hidden="true" />
-                                        </div>
-                                        <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F97316]/70 px-2.5 py-1 border border-[#F97316]/20 rounded-full">
-                                            {service.tag}
-                                        </span>
-                                    </div>
-
-                                    <h3 className="text-2xl font-bold text-[#111111] leading-tight">
-                                        {service.headline}
-                                    </h3>
-
-                                    <p className="text-base text-[#111111]/50 leading-relaxed flex-1">
-                                        {service.description}
-                                    </p>
-
-                                    <ul className="space-y-2.5" aria-label={`${service.headline} capabilities`}>
-                                        {service.bullets.map((b) => (
-                                            <li key={b} className="flex items-center gap-2.5 text-sm text-[#111111]/55">
-                                                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#F97316] shrink-0" />
-                                                {b}
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    <Link
-                                        href={service.href}
-                                        aria-label={`Learn more about ${service.headline}`}
-                                        className="inline-flex items-center gap-2 text-sm font-semibold text-[#111111]/40 group-hover:text-[#F97316] transition-colors duration-200 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 rounded"
+                        {/* Row 0 — cards 0, 1, 2 */}
+                        <div
+                            ref={row0Ref}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-5"
+                        >
+                            {SERVICES.slice(0, 3).map((service) => {
+                                const Icon = service.icon
+                                return (
+                                    <article
+                                        key={service.headline}
+                                        className="group relative bg-white border border-[#111111]/6 rounded-2xl p-10 flex flex-col gap-6 hover:shadow-[0_8px_40px_rgba(249,115,22,0.10)] hover:border-[#F97316]/30 hover:-translate-y-1 transition-all duration-300"
                                     >
-                                        Learn more
-                                        <ArrowUpRight size={13} aria-hidden="true" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
-                                    </Link>
-                                </article>
-                            )
-                        })}
+                                        <div className="flex items-center justify-between">
+                                            <div className="w-14 h-14 rounded-xl bg-[#F97316]/8 flex items-center justify-center group-hover:bg-[#F97316]/15 transition-colors">
+                                                <Icon size={28} className="text-[#F97316]" aria-hidden="true" />
+                                            </div>
+                                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F97316]/70 px-2.5 py-1 border border-[#F97316]/20 rounded-full">
+                                                {service.tag}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-[#111111] leading-tight">{service.headline}</h3>
+                                        <p className="text-base text-[#111111]/50 leading-relaxed flex-1">{service.description}</p>
+                                        <ul className="space-y-2.5" aria-label={`${service.headline} capabilities`}>
+                                            {service.bullets.map((b) => (
+                                                <li key={b} className="flex items-center gap-2.5 text-sm text-[#111111]/55">
+                                                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#F97316] shrink-0" />
+                                                    {b}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <Link
+                                            href={service.href}
+                                            aria-label={`Learn more about ${service.headline}`}
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-[#111111]/40 group-hover:text-[#F97316] transition-colors duration-200 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 rounded"
+                                        >
+                                            Learn more
+                                            <ArrowUpRight size={13} aria-hidden="true" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                                        </Link>
+                                    </article>
+                                )
+                            })}
+                        </div>
+
+                        {/* Row 1 — cards 3, 4, 5 */}
+                        <div
+                            ref={row1Ref}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+                        >
+                            {SERVICES.slice(3).map((service) => {
+                                const Icon = service.icon
+                                return (
+                                    <article
+                                        key={service.headline}
+                                        className="group relative bg-white border border-[#111111]/6 rounded-2xl p-10 flex flex-col gap-6 hover:shadow-[0_8px_40px_rgba(249,115,22,0.10)] hover:border-[#F97316]/30 hover:-translate-y-1 transition-all duration-300"
+                                    >
+                                        <div className="flex items-center justify-between">
+                                            <div className="w-14 h-14 rounded-xl bg-[#F97316]/8 flex items-center justify-center group-hover:bg-[#F97316]/15 transition-colors">
+                                                <Icon size={28} className="text-[#F97316]" aria-hidden="true" />
+                                            </div>
+                                            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F97316]/70 px-2.5 py-1 border border-[#F97316]/20 rounded-full">
+                                                {service.tag}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-[#111111] leading-tight">{service.headline}</h3>
+                                        <p className="text-base text-[#111111]/50 leading-relaxed flex-1">{service.description}</p>
+                                        <ul className="space-y-2.5" aria-label={`${service.headline} capabilities`}>
+                                            {service.bullets.map((b) => (
+                                                <li key={b} className="flex items-center gap-2.5 text-sm text-[#111111]/55">
+                                                    <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#F97316] shrink-0" />
+                                                    {b}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <Link
+                                            href={service.href}
+                                            aria-label={`Learn more about ${service.headline}`}
+                                            className="inline-flex items-center gap-2 text-sm font-semibold text-[#111111]/40 group-hover:text-[#F97316] transition-colors duration-200 mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 rounded"
+                                        >
+                                            Learn more
+                                            <ArrowUpRight size={13} aria-hidden="true" className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
+                                        </Link>
+                                    </article>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </section>
